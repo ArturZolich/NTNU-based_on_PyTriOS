@@ -1,0 +1,36 @@
+Change log for pytrioss
+
+2023.04.04
+
+Upgraded with a slimmer version of a reader as minimum working example: read from either G1 or G2 sensors, set integration time and log to file.
+This has only been developed and tested with RAMSES radiometers.
+
+
+2023.01.04
+
+Upgraded to the version of PyTrios used in the So-Rad system (see https://github.com/monocle-h2020/so-rad). 
+The codebase has also been brought back to just the implementation of PyTrios sensor monitoring, minus added peripherals such as GPS. The So-Rad codebase is a more versatile solution for system integration.
+
+- Removed old, broken examples
+- Updated to Python3
+- Added a test script
+- Added a single 'manager' interface
+- Removed gpslib
+
+
+2015.12.28
+
+Xmas project: Completely revamped PyTrios library.
+
+Major refactoring: main functionality wrapped in TChannel and TPacket classes in TClasses.py:
+- TPacket identifies what sort of packet (query, measurement, config) a sensor sent
+- TChannel represents a single module 
+- TChannel instances are collected in the tchannel dictionary which no longer requires you to track which sensor is linked to which serial port (see example)
+- tpackethandler links tpackets to previously identified tchannels
+- most common commands for SAM sensors are brought under their respective TChannel subclass, TSAM
+- most common commands for MicroFlu are not yet integrated (because I don't have the sensors)
+- TChannel offers two ways to monitor measurement progress (tchannel.is_finished() and tchannel.is_pending())
+
+The front-end (PyTrios.py) is now limited to the active monitoring of COM ports and subsequent handling of packets
+
+
